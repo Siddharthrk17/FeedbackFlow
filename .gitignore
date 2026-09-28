@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+target/
+build/
+.gradle/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Build output
+dist/

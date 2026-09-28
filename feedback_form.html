@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Feedback Form</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #f0f4f8;
+      color: #1a202c;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      width: 794px;
+      min-height: 1123px;
+      background: #ffffff;
+      margin: 0 auto;
+      padding: 48px 56px;
+      border: 1px solid #cbd5e0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      position: relative;
+    }
+
+    /* ─── HEADER ─── */
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #4f46e5;
+      margin-bottom: 28px;
+    }
+
+    .header-left .institution {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6366f1;
+      margin-bottom: 4px;
+    }
+
+    .header-left h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e1b4b;
+      line-height: 1.2;
+    }
+
+    .header-left .subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .form-id {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+
+    .confidential-badge {
+      display: inline-block;
+      margin-top: 8px;
+      background: #fef9c3;
+      border: 1px solid #fde047;
+      color: #854d0e;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── COURSE INFO ─── */
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4f46e5;
+      margin-bottom: 10px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .info-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-field label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .info-field .field-line {
+      border-bottom: 1.5px solid #cbd5e0;
+      height: 28px;
+      width: 100%;
+      background: #f8fafc;
+      padding: 0 8px;
+      font-size: 13px;
+      color: #334155;
+      display: flex;
+      align-items: center;
+    }
+
+    .info-field .field-line.filled {
+      font-style: normal;
+      color: #1e293b;
+    }
+
+    /* ─── INSTRUCTION BOX ─── */
+    .instruction-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+    }
+
+    .instruction-box p {
+      font-size: 12px;
+      color: #1e40af;
+      line-height: 1.6;
+    }
+
+    .instruction-box strong {
+      font-weight: 700;
+    }
+
+    /* ─── RATING SCALE ─── */
+    .scale-legend {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .scale-legend-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .scale-items {
+      display: flex;
+      flex: 1;
+    }
+
+    .scale-item {
+      flex: 1;
+      text-align: center;
+      padding: 6px 4px;
+      font-size: 11px;
+      font-weight: 600;
+      border-right: 1px solid #e2e8f0;
+    }
+
+    .scale-item:last-child { border-right: none; }
+    .scale-item .num { font-size: 15px; display: block; font-weight: 700; }
+
+    .s1 { background: #fef2f2; color: #dc2626; }
+    .s2 { background: #fff7ed; color: #ea580c; }
+    .s3 { background: #fefce8; color: #ca8a04; }
+    .s4 { background: #f0fdf4; color: #16a34a; }
+    .s5 { background: #eff6ff; color: #2563eb; }
+
+    /* ─── QUESTIONS ─── */
+    .questions-section { margin-bottom: 28px; }
+
+    .questions-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .questions-table thead th {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #475569;
+      padding: 8px 10px;
+      text-align: center;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+    }
+
+    .questions-table thead th.q-col { text-align: left; }
+
+    .questions-table tbody tr:nth-child(even) td { background: #fafafa; }
+    .questions-table tbody tr:hover td { background: #f1f5f9; }
+
+    .questions-table tbody td {
+      font-size: 12.5px;
+      color: #334155;
+      padding: 10px 10px;
+      border: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+
+    .q-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      width: 28px;
+      text-align: center;
+    }
+
+    .q-text { line-height: 1.5; }
+
+    .rating-col {
+      width: 42px;
+      text-align: center;
+    }
+
+    .bubble {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #cbd5e0;
+      border-radius: 50%;
+      background: white;
+    }
+
+    /* ─── CATEGORY HEADER ROW ─── */
+    .cat-header td {
+      background: #4f46e5 !important;
+      color: white !important;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 7px 10px !important;
+      text-transform: uppercase;
+    }
+
+    /* ─── OPEN FEEDBACK ─── */
+    .open-feedback { margin-bottom: 28px; }
+
+    .open-field {
+      border: 1.5px solid #cbd5e0;
+      border-radius: 4px;
+      width: 100%;
+      height: 64px;
+      margin-top: 8px;
+      background: #f8fafc;
+      padding: 8px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    /* ─── OVERALL RATING ─── */
+    .overall-box {
+      background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+      border: 1.5px solid #c7d2fe;
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .overall-box .label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #3730a3;
+    }
+
+    .overall-box .label span {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: #6366f1;
+      margin-top: 2px;
+    }
+
+    .overall-stars {
+      display: flex;
+      gap: 8px;
+    }
+
+    .star-bubble {
+      width: 36px;
+      height: 36px;
+      border: 2px solid #818cf8;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #6366f1;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1.5px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: #94a3b8;
+      max-width: 400px;
+      line-height: 1.6;
+    }
+
+    .footer-sign {
+      text-align: right;
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    .footer-sign .sign-line {
+      border-top: 1px solid #cbd5e0;
+      width: 160px;
+      margin-bottom: 4px;
+      margin-left: auto;
+    }
+
+    /* ─── PRINT BUTTON ─── */
+    .print-btn {
+      display: block;
+      width: 794px;
+      margin: 0 auto 16px auto;
+      padding: 12px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+
+    .print-btn:hover { background: #4338ca; }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .page { box-shadow: none; border: none; margin: 0; padding: 40px 48px; }
+      .print-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+  <div class="page">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <div class="institution">Department of Academic Affairs</div>
+        <h1>Course Feedback Form</h1>
+        <div class="subtitle">End-of-Semester Student Evaluation</div>
+      </div>
+      <div class="header-right">
+        <div class="form-id">Form ID: FF-__________</div>
+        <div class="confidential-badge">🔒 Strictly Confidential</div>
+      </div>
+    </div>
+
+    <!-- COURSE DETAILS -->
+    <div class="section-title">Section A — Course Information</div>
+    <div class="info-grid">
+      <div class="info-field">
+        <label>Course Code</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="info-field">
+        <label>Course Title</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="info-field">
+        <label>Faculty Name</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="info-field">
+        <label>Semester &amp; Year</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="info-field">
+        <label>Department</label>
+        <div class="field-line"></div>
+      </div>
+      <div class="info-field">
+        <label>Date of Submission</label>
+        <div class="field-line"></div>
+      </div>
+    </div>
+
+    <!-- INSTRUCTIONS -->
+    <div class="instruction-box">
+      <p>
+        <strong>Instructions:</strong> This feedback is completely anonymous and confidential.
+        Your honest responses help us improve the quality of education.
+        For each statement, circle or fill in the bubble corresponding to your rating.
+        <strong>1 = Strongly Disagree &nbsp;|&nbsp; 2 = Disagree &nbsp;|&nbsp;
+        3 = Neutral &nbsp;|&nbsp; 4 = Agree &nbsp;|&nbsp; 5 = Strongly Agree.</strong>
+        Please answer all questions.
+      </p>
+    </div>
+
+    <!-- RATING SCALE LEGEND -->
+    <div class="scale-legend">
+      <div class="scale-legend-label">Rating Scale</div>
+      <div class="scale-items">
+        <div class="scale-item s1"><span class="num">1</span>Strongly Disagree</div>
+        <div class="scale-item s2"><span class="num">2</span>Disagree</div>
+        <div class="scale-item s3"><span class="num">3</span>Neutral</div>
+        <div class="scale-item s4"><span class="num">4</span>Agree</div>
+        <div class="scale-item s5"><span class="num">5</span>Strongly Agree</div>
+      </div>
+    </div>
+
+    <!-- QUESTIONS TABLE -->
+    <div class="section-title">Section B — Rating Questions</div>
+    <div class="questions-section">
+      <table class="questions-table">
+        <thead>
+          <tr>
+            <th class="q-col" style="width:28px">#</th>
+            <th class="q-col">Statement</th>
+            <th class="rating-col">1</th>
+            <th class="rating-col">2</th>
+            <th class="rating-col">3</th>
+            <th class="rating-col">4</th>
+            <th class="rating-col">5</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- CATEGORY: Teaching Quality -->
+          <tr class="cat-header">
+            <td colspan="7">Teaching Quality</td>
+          </tr>
+          <tr>
+            <td class="q-num">1</td>
+            <td class="q-text">The instructor explained concepts clearly and effectively.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">2</td>
+            <td class="q-text">The instructor was well-prepared for every lecture.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">3</td>
+            <td class="q-text">The instructor encouraged student participation and questions.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">4</td>
+            <td class="q-text">The instructor was accessible and helpful outside class hours.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+
+          <!-- CATEGORY: Course Content -->
+          <tr class="cat-header">
+            <td colspan="7">Course Content &amp; Curriculum</td>
+          </tr>
+          <tr>
+            <td class="q-num">5</td>
+            <td class="q-text">The course content was relevant and up-to-date.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">6</td>
+            <td class="q-text">The syllabus was covered adequately and on schedule.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">7</td>
+            <td class="q-text">Study materials (slides, notes, references) were helpful.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+
+          <!-- CATEGORY: Assessment -->
+          <tr class="cat-header">
+            <td colspan="7">Assessment &amp; Evaluation</td>
+          </tr>
+          <tr>
+            <td class="q-num">8</td>
+            <td class="q-text">Assignments and exams were fair and aligned with what was taught.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">9</td>
+            <td class="q-text">Feedback on assignments was timely and constructive.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">10</td>
+            <td class="q-text">The grading criteria were clearly communicated at the start.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+
+          <!-- CATEGORY: Overall Experience -->
+          <tr class="cat-header">
+            <td colspan="7">Overall Learning Experience</td>
+          </tr>
+          <tr>
+            <td class="q-num">11</td>
+            <td class="q-text">I developed new skills and knowledge through this course.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+          <tr>
+            <td class="q-num">12</td>
+            <td class="q-text">I would recommend this course to other students.</td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+            <td class="rating-col"><span class="bubble"></span></td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- OVERALL RATING -->
+    <div class="overall-box">
+      <div class="label">
+        Overall Course Rating
+        <span>Circle one overall rating from 1 (Poor) to 5 (Excellent)</span>
+      </div>
+      <div class="overall-stars">
+        <div class="star-bubble">1</div>
+        <div class="star-bubble">2</div>
+        <div class="star-bubble">3</div>
+        <div class="star-bubble">4</div>
+        <div class="star-bubble">5</div>
+      </div>
+    </div>
+
+    <!-- OPEN FEEDBACK -->
+    <div class="section-title">Section C — Written Feedback</div>
+    <div class="open-feedback">
+      <div class="info-field" style="margin-bottom:14px;">
+        <label>What did you find most valuable about this course?</label>
+        <div class="open-field"></div>
+      </div>
+      <div class="info-field" style="margin-bottom:14px;">
+        <label>What could be improved? (Content, delivery, assessments, etc.)</label>
+        <div class="open-field"></div>
+      </div>
+      <div class="info-field">
+        <label>Any additional comments or suggestions for the instructor?</label>
+        <div class="open-field"></div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-note">
+        This form is completely anonymous. Do not write your name anywhere on this sheet.
+        Responses are collected by the academic department and shared with faculty
+        only after grades are submitted.
+      </div>
+      <div class="footer-sign">
+        <div class="sign-line"></div>
+        Received By (Staff Signature)
+      </div>
+    </div>
+
+  </div><!-- /.page -->
+
+</body>
+</html>
